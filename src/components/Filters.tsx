@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { DateTimePicker } from "@material-ui/pickers";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { TextField, Button } from "@material-ui/core";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -34,6 +34,11 @@ const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
   const [user, setUser] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    console.log(startDate);
+    console.log(endDate);
+  }, [startDate, endDate]);
 
   useEffect(() => {
     getLogs();
@@ -82,16 +87,17 @@ const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
   return (
     <Wrapper>
       <div className="column">
-        <KeyboardDatePicker
-          format="DD/MM/yyyy"
+        <DateTimePicker
+          // Don't showing hours and minutes, because this picker shows wrong time
+          format="yyyy/MM/DD"
           margin="normal"
           label="Data od"
           value={startDate}
           onChange={handleStartDateChange}
         />
 
-        <KeyboardDatePicker
-          format="DD/MM/yyyy"
+        <DateTimePicker
+          format="yyyy/MM/DD"
           margin="normal"
           label="Data do"
           value={endDate}
