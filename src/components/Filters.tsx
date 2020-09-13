@@ -3,6 +3,7 @@ import { DateTimePicker } from "@material-ui/pickers";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { TextField, Button } from "@material-ui/core";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Wrapper } from "./Filters.styles";
 import { connect, ConnectedProps } from "react-redux";
@@ -15,7 +16,6 @@ import { fetchLogs } from "../actions";
 
 const mapStateToProps = (state: RootState) => ({
   logs: state.logs,
-  dataStatus: state.status,
 });
 
 const mapDispatch = {
@@ -28,45 +28,37 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
-  const [startDate, setStartDate] = useState(new Date("01 Jan 2015"));
+const Filters: React.FC<Props> = ({ logs, fetchLogs }) => {
+  const [startDate, setStartDate] = useState(new Date("01 Jan 2019"));
   const [endDate, setEndDate] = useState(new Date());
   const [user, setUser] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    console.log(startDate);
-    console.log(endDate);
-  }, [startDate, endDate]);
-
-  useEffect(() => {
-    getLogs();
+    getLogs(page);
   }, []);
 
-  useEffect(() => {
-    console.log(logs);
-    console.log(dataStatus);
-  }, [dataStatus]);
-
-  const getLogs = async () => {
-    if (logs.pages !== 0 && (page < 1 || page > logs.pages)) {
-      // TODO: Handle incorrect page error with toaster
-      console.error("Incorrect page");
+  const getLogs = async (newPage: number) => {
+    if (logs.pages !== 0 && (newPage < 1 || newPage > logs.pages)) {
+      toast.error("Incorrect page");
     } else {
-      fetchLogs(startDate, endDate, user, status, page);
+      fetchLogs(startDate, endDate, user, status, newPage);
+      if (page !== newPage) {
+        setPage(newPage);
+      }
     }
   };
 
   const handleStartDateChange = (newDate?: MaterialUiPickersDate) => {
     if (newDate) {
-      setStartDate(newDate.toDate());
+      setStartDate(newDate);
     }
   };
 
   const handleEndDateChange = (newDate?: MaterialUiPickersDate) => {
     if (newDate) {
-      setEndDate(newDate.toDate());
+      setEndDate(newDate);
     }
   };
 
@@ -84,12 +76,12 @@ const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
     setPage(parseInt(newPage.target.value, 10));
   };
 
+  // Datepicker throws an error when changing month for some reason.
   return (
     <Wrapper>
       <div className="column">
         <DateTimePicker
-          // Don't showing hours and minutes, because this picker shows wrong time
-          format="yyyy/MM/DD"
+          format="yyyy/MM/dd hh:mm"
           margin="normal"
           label="Data od"
           value={startDate}
@@ -97,7 +89,7 @@ const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
         />
 
         <DateTimePicker
-          format="yyyy/MM/DD"
+          format="yyyy/MM/dd hh:mm"
           margin="normal"
           label="Data do"
           value={endDate}
@@ -112,11 +104,11 @@ const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
       </div>
 
       <div className="column">
-        <Button variant="contained" color="primary" onClick={getLogs}>
+        <Button variant="contained" color="primary" onClick={() => getLogs(1)}>
           Znajdź
         </Button>
       </div>
-      {logs.data.length > 0 && (
+      {logs.pages > 0 && (
         <div className="column">
           <TextField
             className="page-field"
@@ -130,13 +122,14 @@ const Filters: React.FC<Props> = ({ logs, dataStatus, fetchLogs }) => {
               className="page-arrow"
               variant="contained"
               color="primary"
-              onClick={getLogs}
+              onClick={() => getLogs(page)}
             >
               <ArrowForwardIosIcon />
             </Button>
           </div>
         </div>
       )}
+      <ToastContainer />
     </Wrapper>
   );
 };

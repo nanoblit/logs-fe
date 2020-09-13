@@ -13,27 +13,21 @@ export interface SetLogsAction {
 }
 
 export const SET_LOADING = "SET_LOADING";
-export const SET_ERROR = "SET_ERROR";
-export const SET_FINISHED = "SET_FINISHED";
+export const SET_FINISHED_LOADING = "SET_FINISHED_LOADING";
 
-export interface StatusState {
-  loading: boolean;
+export type LoadingState = boolean;
+export interface ErrorState {
   error: string | null;
 }
 
 export interface SetLoadingAction {
   type: typeof SET_LOADING;
-  payload: StatusState;
+  loading: LoadingState;
 }
+
+export const SET_ERROR = "SET_ERROR";
 
 export interface SetErrorAction {
   type: typeof SET_ERROR;
-  payload: StatusState;
+  payload: ErrorState;
 }
-
-export interface SetFinishedAction {
-  type: typeof SET_FINISHED;
-  payload: StatusState;
-}
-
-export type StatusActionTypes = SetLoadingAction | SetErrorAction | SetFinishedAction;

@@ -8,9 +8,7 @@ import {
   SetLoadingAction,
   SET_LOADING,
   SetErrorAction,
-  SetFinishedAction,
   SET_ERROR,
-  SET_FINISHED,
 } from "./types";
 import { RootState } from "../reducers";
 import { Action } from "redux";
@@ -22,33 +20,17 @@ const setLogs = (logs: LogsState): SetLogsAction => {
   };
 };
 
-const setLoading = (): SetLoadingAction => {
+const setLoading = (loading: boolean): SetLoadingAction => {
   return {
     type: SET_LOADING,
-    payload: {
-      loading: true,
-      error: null,
-    },
+    loading: loading,
   };
 };
 
 const setError = (error: string): SetErrorAction => {
   return {
     type: SET_ERROR,
-    payload: {
-      loading: true,
-      error: error,
-    },
-  };
-};
-
-const setFinished = (): SetFinishedAction => {
-  return {
-    type: SET_FINISHED,
-    payload: {
-      loading: false,
-      error: null,
-    },
+    payload: { error },
   };
 };
 
@@ -60,7 +42,7 @@ export const fetchLogs = (
   page: number
 ): ThunkAction<void, RootState, unknown, Action<any>> => async (dispatch) => {
   try {
-    dispatch(setLoading());
+    dispatch(setLoading(true));
 
     const logs: LogsState = (
       await axios.post("http://localhost:5000/", {
@@ -72,5 +54,5 @@ export const fetchLogs = (
   } catch (err) {
     dispatch(setError(err.response.data));
   }
-  dispatch(setFinished());
+  dispatch(setLoading(false));
 };

@@ -4,12 +4,14 @@ import {
   SetLogsAction,
   LogsState,
   SET_LOGS,
-  StatusState,
-  StatusActionTypes,
   SET_LOADING,
   SET_ERROR,
-  SET_FINISHED,
+  LoadingState,
+  SetErrorAction,
+  ErrorState,
+  SetLoadingAction,
 } from "../actions/types";
+
 
 const initialLogsState: LogsState = {
   data: [],
@@ -28,19 +30,27 @@ export const logsReducer = (
   }
 };
 
-const initialStatusState: StatusState = {
-  loading: false,
-  error: null,
-};
-
-export const statusReducer = (
-  state = initialStatusState,
-  action: StatusActionTypes
-): StatusState => {
+export const loadingReducer = (
+  state = false,
+  action: SetLoadingAction
+): LoadingState => {
   switch (action.type) {
     case SET_LOADING:
-    case SET_FINISHED:
-      return { ...state, loading: action.payload.loading };
+      return action.loading;
+    default:
+      return state;
+  }
+};
+
+const initialErrorState: ErrorState = {
+  error: null
+}
+
+export const errorReducer = (
+  state = initialErrorState,
+  action: SetErrorAction
+): ErrorState => {
+  switch (action.type) {
     case SET_ERROR:
       return action.payload;
     default:
@@ -50,7 +60,8 @@ export const statusReducer = (
 
 export const rootReducer = combineReducers({
   logs: logsReducer,
-  status: statusReducer,
+  loading: loadingReducer,
+  error: errorReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

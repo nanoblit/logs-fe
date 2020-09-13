@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MomentUtils from "@date-io/moment";
+import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
@@ -14,7 +14,6 @@ import thunk from "redux-thunk";
 import App from "./App";
 import { rootReducer } from "./reducers";
 
-
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const theme = createMuiTheme();
@@ -22,7 +21,7 @@ const theme = createMuiTheme();
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <MuiPickersUtilsProvider utils={MomentUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>

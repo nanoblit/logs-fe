@@ -1,4 +1,5 @@
 export interface Log {
+  Id: string;
   MobileUserId: string;
   MobileDomain: string;
   Branch: string;
