@@ -11,10 +11,6 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../reducers";
 import { fetchLogs } from "../actions";
 
-// TODO: Form
-// TODO: Fix date pickers throwing findDOMNode is deprecated in StrictMode error.
-// TODO: Add spinner on load and error on error (in another component)
-
 const mapStateToProps = (state: RootState) => ({
   logs: state.logs,
   loading: state.loading,
