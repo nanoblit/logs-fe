@@ -57,7 +57,7 @@ const LogsView: React.FC<Props> = ({ logs, loading, error }) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper isLoading={loading}>
       {loading && (
         <div className="loader">
           <ClipLoader />

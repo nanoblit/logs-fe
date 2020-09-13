@@ -1,9 +1,24 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.main`
+import { LoadingState } from "../actions/types";
+
+type WrapperProps = {
+  isLoading: LoadingState;
+};
+
+export const Wrapper = styled.main<WrapperProps>`
   display: flex;
   flex-direction: column;
   overflow: auto;
+  height: 100%;
+
+  ${({ isLoading }) =>
+    isLoading
+      ? `
+    justify-content: center;
+    align-items: center;
+  `
+      : ""}
 
   .loader {
     display: flex;
@@ -21,7 +36,7 @@ export const Wrapper = styled.main`
 
     .row {
       &:hover {
-        background: #FEF8FA;
+        background: #fef8fa;
       }
     }
   }
@@ -35,7 +50,7 @@ export const Wrapper = styled.main`
       width: 100%;
       height: 20rem;
       margin-right: 1rem;
-      display:flex;
+      display: flex;
       flex-direction: column;
 
       &:last-child {
