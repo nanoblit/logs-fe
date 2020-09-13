@@ -3,23 +3,34 @@ import styled from "styled-components";
 export const Wrapper = styled.nav`
   display: flex;
   align-items: stretch;
+  justify-content: space-between;
 
-  .column {
+  .panel {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-right: 3rem;
+    align-items: stretch;
 
-    &:last-child {
-      margin-right: 0;
+    .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-right: 3rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
-  }
 
-  .page-field {
-    width: 3rem;
-  }
+    .change-page-buttons {
+      display: flex;
+      align-items: center;
+    }
 
-  .page-arrow {
-    margin-left: 1rem;
+    .page-field {
+      width: 3rem;
+    }
+
+    .page-arrow {
+      margin-left: 1rem;
+    }
   }
 `;

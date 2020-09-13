@@ -52,7 +52,7 @@ export const fetchLogs = (
 
     dispatch(setLogs(logs));
   } catch (err) {
-    dispatch(setError(err.response.data));
+    dispatch(setError(err.message ?? err.response.data));
   }
   dispatch(setLoading(false));
 };

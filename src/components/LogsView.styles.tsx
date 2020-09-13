@@ -27,8 +27,8 @@ export const Wrapper = styled.main<WrapperProps>`
   }
 
   .table {
-    height: 100%;
     overflow: auto;
+    margin-bottom: 1rem;
 
     .head {
       font-weight: bold;
@@ -44,7 +44,7 @@ export const Wrapper = styled.main<WrapperProps>`
   .cards {
     display: flex;
     justify-content: space-evenly;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 
     .card {
       width: 100%;

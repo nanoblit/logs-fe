@@ -64,8 +64,8 @@ const LogsView: React.FC<Props> = ({ logs, loading, error }) => {
         </div>
       )}
       {logs.pages > 0 && !loading && (
-        <TableContainer component={Paper}>
-          <Table className="table" aria-label="simple table">
+        <TableContainer className="table" component={Paper}>
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell className="head" align="center">
@@ -111,9 +111,7 @@ const LogsView: React.FC<Props> = ({ logs, loading, error }) => {
                   selected={data.Id === selected}
                   onClick={() => handleRowClick(data)}
                 >
-                  <TableCell component="th" scope="row">
-                    {data.MobileUserId}
-                  </TableCell>
+                  <TableCell align="center">{data.MobileUserId}</TableCell>
                   <TableCell align="center">{data.MobileDomain}</TableCell>
                   <TableCell align="center">{data.Branch}</TableCell>
                   <TableCell align="center">{data.OperationName}</TableCell>
