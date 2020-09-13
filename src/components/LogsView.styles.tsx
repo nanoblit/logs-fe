@@ -1,9 +1,7 @@
 import styled from "styled-components";
 
-import { LoadingState } from "../actions/types";
-
 type WrapperProps = {
-  isLoading: LoadingState;
+  isCentered: boolean;
 };
 
 export const Wrapper = styled.main<WrapperProps>`
@@ -12,8 +10,8 @@ export const Wrapper = styled.main<WrapperProps>`
   overflow: auto;
   height: 100%;
 
-  ${({ isLoading }) =>
-    isLoading
+  ${({ isCentered }) =>
+    isCentered
       ? `
     justify-content: center;
     align-items: center;

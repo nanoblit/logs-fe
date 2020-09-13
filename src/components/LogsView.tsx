@@ -57,12 +57,13 @@ const LogsView: React.FC<Props> = ({ logs, loading, error }) => {
   };
 
   return (
-    <Wrapper isLoading={loading}>
+    <Wrapper isCentered={loading || logs.pages <= 0}>
       {loading && (
         <div className="loader">
           <ClipLoader />
         </div>
       )}
+      {logs.pages <= 0 && !loading && <div>Brak danych do wyświetlenia</div>}
       {logs.pages > 0 && !loading && (
         <TableContainer className="table" component={Paper}>
           <Table aria-label="simple table">
